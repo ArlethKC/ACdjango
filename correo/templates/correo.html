@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenidos a Django</title>
+   
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .contenedorFormulario {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #4CAF50;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        input[type="submit"] {
+            width: 150px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px; /* Añadido para separar el botón de enviar del área de texto */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        button[type="button"] {
+            width: 150px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="button"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <script>
+        function descargarTexto() {
+            var contenido = document.getElementById("areaTexto").value;
+            var blob = new Blob([contenido], { type: "text/plain" });
+            var url = window.URL.createObjectURL(blob);
+            var enlaceDescarga = document.createElement("a");
+            enlaceDescarga.href = url;
+            enlaceDescarga.download = "miArchivo.txt";
+            document.body.appendChild(enlaceDescarga);
+            enlaceDescarga.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(enlaceDescarga);
+        }
+    </script>
+</head>
+<body>
+    <div class="contenedorFormulario">
+        <p>Hola Mundo en Django</p>
+
+        {% if "valido" in request.GET %}
+            <p>Información enviada correctamente</p>
+        {% endif %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <!-- Área de texto -->
+            <table>{{miFormulario.as_table}}</table>
+
+            <!-- Botón de enviar debajo del campo de contenido -->
+            <input type="submit" value="Enviar">
+
+            <!-- Área de texto -->
+            <textarea id="areaTexto" name="contenido" rows="4" cols="50"></textarea>
+            
+            <!-- Botón de descarga -->
+            <button type="button" onclick="descargarTexto()">Descargar</button>
+        </form>
+    </div>
+</body>
+</html>

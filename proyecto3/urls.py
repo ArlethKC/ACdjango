@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from proyecto3 import views
+from django.core.mail import EmailMessage
+from django.urls import include, path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hola/', views.proyecto3, name='¡Hola Mundo!'),
+    path('', views.proyecto3, name='¡Hola Django!'),
+    path('correo/', include('correo.urls')),
 ]
